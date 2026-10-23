@@ -25,27 +25,39 @@
 
 ## 🗺️ 迭代路线图 (Roadmap)
 
-- [x] **M1: 仓库工程骨架与资源配置**
+- [x] **M1: 仓库工程骨架与基础资源**
 - [x] **M2: MVP 核心击键监听与权限管理**
-- [ ] **M3: 里程碑激励、金币音效与毛玻璃 HUD 庆祝** (下一阶段)
-- [ ] **M4: 双指标（汉字折算）与最近 7 天打卡沉淀**
-- [ ] **M5: macOS 开机自启与个性化设置**
-- [ ] **M6: GitHub Actions 自动化打包与 Release 发布**
+- [x] **M3: 里程碑激励、金币音效与毛玻璃 HUD 庆祝**
+- [x] **M4: 双指标（汉字折算）与最近 7 天打卡沉淀**
+- [x] **M5: macOS 开机自启与个性化设置**
+- [x] **M6: GitHub Actions 自动化打包与 Release 发布**
 
 ---
 
-## 🛠️ 构建与运行
+## 🛠️ 构建、安装与运行
 
 ### 依赖环境
-- macOS 13.0+
+- macOS 13.0+ (Ventura 或更高版本)
 - Xcode Command Line Tools (`swiftc`)
 
-### 构建命令
+### 1. 本地构建
 在项目根目录下执行：
 ```bash
 ./scripts/build.sh
 ```
-构建产物将输出在 `build/TypeJoy.app`，可以直接运行或拖入 `/Applications` 文件夹中使用。
+构建产物将输出在 `build/TypeJoy.app`。
+
+### 2. 本地一键安装到 `/Applications`
+```bash
+./scripts/install.sh
+```
+安装脚本会自动编译最新源码、拷贝至 `/Applications/TypeJoy.app` 并清理隔离属性。
+
+### 3. 本地验证与健康检查
+```bash
+./scripts/verify_app.sh
+```
+自动检查运行状态、代码签名、资源完整度与内存 CPU 占用。
 
 ---
 

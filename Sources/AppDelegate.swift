@@ -24,9 +24,25 @@ public final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.statsManager.resetToday()
         }
         
+        // 绑定回调：修改里程碑步长
+        menuCtrl.onMilestoneIntervalChanged = { [weak self] interval in
+            self?.statsManager.setMilestoneInterval(interval)
+        }
+        
         // 绑定回调：击键次数变更 -> 刷新菜单栏展示
         statsManager.onCountChanged = { [weak menuCtrl] count in
             menuCtrl?.updateCount(count)
+        }
+        
+        // 绑定回调：达成里程碑 -> 播放金币音效 + 弹出毛玻璃 HUD 庆祝浮窗
+        statsManager.onMilestoneReached = { count, estimatedCharsText in
+            SoundManager.shared.playCoinSound()
+            CelebrationHUDWindow.shared.showCelebration(count: count, estimatedCharsText: estimatedCharsText)
+        }
+        
+        // 绑定回调：历史数据归档更新 -> 刷新下拉历史菜单
+        statsManager.onHistoryChanged = { [weak menuCtrl] history in
+            menuCtrl?.updateHistory(history)
         }
         
         // 绑定回调：监听到有效击键 -> 统计计数递增
@@ -42,6 +58,8 @@ public final class AppDelegate: NSObject, NSApplicationDelegate {
         // 加载初始状态
         let initialCount = statsManager.todayCount
         menuCtrl.updateCount(initialCount)
+        menuCtrl.updateHistory(statsManager.historyRecords)
+        menuCtrl.updateMilestoneInterval(statsManager.milestoneInterval)
         menuCtrl.updatePermissionStatus(isTrusted: KeystrokeMonitor.isAccessibilityTrusted())
         
         // 启动全局击键监听
