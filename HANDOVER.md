@@ -47,29 +47,32 @@
 - `LICENSE`：MIT 开源协议。
 - `README.md`：项目概述与路线图。
 
+### ✅ 已完成：Milestone 2 (MVP 核心击键监听与权限管理)
+- `Sources/StatsManager.swift`：基于 `UserDefaults` 的今日击键计数持久化，支持跨天自动清零、线程安全与 `onCountChanged` 回调。
+- `Sources/KeystrokeMonitor.swift`：辅助功能权限检测与引导跳转、系统全局按键监听（过滤 `event.isARepeat`）、权限状态轮询与自动恢复。
+- `Sources/MenuController.swift`：状态栏 `NSStatusItem` 实时展示 `⌨️ <count>`，集成今日击键统计、权限状态提示、重置与退出菜单项。
+- `Sources/AppDelegate.swift` & `Sources/main.swift`：纯菜单栏无 Dock 模式（`accessory`），打通统计、监听与菜单生命周期。
+- 编译与 smoke test 通过，完整生成 `build/TypeJoy.app`。
+
 ---
 
 ## 4. 下一步任务 (Next Tasks)
 
-### 🎯 即刻开展：Milestone 2 (MVP 核心击键监听与权限管理)
-按顺序实现以下源文件（均位于 `Sources/` 目录）：
-1. **`Sources/StatsManager.swift`**：
-   - 今日计数持久化（`UserDefaults`）
-   - 击键更新事件通知闭包 `onCountChanged`
-2. **`Sources/KeystrokeMonitor.swift`**：
-   - 辅助功能权限检测（`AXIsProcessTrusted()`）
-   - 全局按键监听器（`NSEvent.addGlobalMonitorForEvents(matching: [.keyDown])`，过滤 `event.isARepeat`）
-   - 引导跳转系统设置方法（`x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility`）
-3. **`Sources/MenuController.swift`**：
-   - `NSStatusItem` 状态栏图标初始化，实时更新标题 `⌨️ <count>`
-   - 下拉菜单（展示今日击键数、辅助功能权限状态、退出菜单）
-4. **`Sources/AppDelegate.swift` & `Sources/main.swift`**：
-   - `NSApp.setActivationPolicy(.accessory)`
-   - 协调 Controller 与 Monitor 的生命周期
-5. **编译与验证**：
-   - 执行 `./scripts/build.sh` 编译出 `build/TypeJoy.app` 并本地测试。
-6. **Git 提交并推送**：
-   - `feat: implement core keystroke monitoring and status bar item (M2)`
+### 🎯 即刻开展：Milestone 3 (里程碑激励、金币音效与毛玻璃 HUD 庆祝)
+按顺序实现以下源文件与功能：
+1. **`Sources/SoundManager.swift`**：
+   - 使用 `AVFoundation` / `NSSound` 高性能加载并播放内置的 `Resources/coin.wav`。
+   - 增加静音开关支持。
+2. **`Sources/CelebrationHUDWindow.swift`**：
+   - 屏幕右上角原生毛玻璃 (`NSVisualEffectView`) 浮窗。
+   - 居中展示达成击键数（例如：`🪙 突破 500 次击键！`）与折算汉字。
+   - 动画效果：弹出缩放 + 2 秒后淡出渐隐，非阻塞。
+3. **阶梯触发器（Milestone Trigger）**：
+   - 默认每 500 或 1,000 次击键触发一次金币庆祝。
+   - 避免重复触发同一阶梯。
+4. **编译测试与 Git 提交**：
+   - `./scripts/build.sh` 验证编译。
+   - 提交 commit：`feat: implement milestone celebration with coin sound and HUD (M3)`。
 
 ---
 
