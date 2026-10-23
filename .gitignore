@@ -60,3 +60,13 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Build products
+build/
+bin/
+dist/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
